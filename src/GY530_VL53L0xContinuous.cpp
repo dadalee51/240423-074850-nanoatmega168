@@ -6,7 +6,7 @@ The range readings are in units of mm. */
 #include <Arduino.h>
 #include <Wire.h>
 #include <VL53L0X.h>
-
+//#include <MemoryUsage.h>
 VL53L0X sensor;
 
 void setup()
@@ -25,13 +25,22 @@ void setup()
   // fast as possible).  To use continuous timed mode
   // instead, provide a desired inter-measurement period in
   // ms (e.g. sensor.startContinuous(100)).
-  sensor.startContinuous();
+  sensor.startContinuous(100);
+  // MEMORY_PRINT_START
+  // MEMORY_PRINT_HEAPSTART
+  // MEMORY_PRINT_HEAPEND
+  // MEMORY_PRINT_STACKSTART
+  // MEMORY_PRINT_END
+  // MEMORY_PRINT_HEAPSIZE
+  // FREERAM_PRINT;
+
 }
 
 void loop()
 {
   Serial.print(sensor.readRangeContinuousMillimeters());
-  if (sensor.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
-
+  if (sensor.timeoutOccurred()) Serial.print(" TIMEOUT");
   Serial.println();
+ 
+
 }
